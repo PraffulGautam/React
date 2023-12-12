@@ -1,17 +1,21 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import {AuthProvider} from './services/authContext.js'
+import { Navbar, Container, Nav } from 'react-bootstrap' 
 import Header from './components/header/header.js'
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./services/store.js";
 
 export const App = () => { 
 return <>
-<AuthProvider>
+<Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
    <Header/>
-   </AuthProvider>
     <Container className="mt-3">
       <Outlet/>
     </Container>
+   </PersistGate>
+   </Provider>
   </>
 }
 

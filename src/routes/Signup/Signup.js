@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Signup = () => {
@@ -9,7 +10,8 @@ export const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const formRef = useRef(null);
-    
+    const navigate = useNavigate();
+
    const resetInput =() => {
     setName("");
     setEmail("");
@@ -24,7 +26,8 @@ export const Signup = () => {
            .then(res => {
             console.log(res); 
             resetInput();
-            alert(res.data.msg)
+            
+            navigate("/login");
            }) 
            .catch(err => {
             console.log(err);

@@ -5,17 +5,13 @@ import App from './App';
 import { createRoot } from 'react-dom/client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Home from './routes/Home';
-import AddressDetails from './routes/AddressDetails';
+ 
 import Products from "./routes/Products";
 import Login from "./routes/Login"
 import Signup from "./routes/Signup" 
-import reportWebVitals from './reportWebVitals'; 
-import Auth from './services/auth'; 
+import reportWebVitals from './reportWebVitals';  
 
 const root = createRoot(document.getElementById('root'));
-let auth = true, isAuthenticated = true;
 
 root.render(
   <BrowserRouter>
@@ -25,12 +21,11 @@ root.render(
               index
               element={
                   <>
-                      <h2>Welcome in your account.</h2>
-                      <p>Please use the navigation above to see Address book or your orders.</p>
+                      <h2>Welcome</h2>
                   </>
               }
           />
-          <Route path="products" element={<Auth><Products/></Auth>}/>
+          <Route path="products" element={<Products/>}/>
           <Route path="login" element={<Login/>}/>
           <Route path="signup" element={<Signup/>}/>
       </Route> 

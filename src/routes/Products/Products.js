@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import useToken from '../../services/useToken';
-import axios from 'axios';
-import { Col, Container, Row } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import React, { useEffect, useState } from 'react' 
+import { Col, Container, Row } from 'react-bootstrap'; 
 import Card from 'react-bootstrap/Card';
+import { api } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const Products = () => {
-    const [data, setData] = useState([]);
-    const {token} = useToken();  
-
-    const chunkArray = (array) => {
-
-        
+    const [data, setData] = useState([]); 
+    const isAuthenticated = useSelector(state => state.isAuthenticated);
+    const navigate = useNavigate();
+    
+    if(!isAuthenticated){ 
+        navigate("/login")
     }
     const fetchData = async ()=>{
-     axios.get("http://localhost:4000/product", {   
-            headers: {
-                Authorization: `Bearer ${token}`
-            }    
-        }).then(resp => {
-            console.log(resp.data.result);
+     api.get("/product").then(resp => { 
             setData(resp.data.result); 
         }) 
         // let temp = await chunkArray(resp.data.result.products);
@@ -29,8 +24,7 @@ export const Products = () => {
     }
     useEffect(() => {
       
-        fetchData();
-        console.log(data);
+        fetchData(); 
         
     },[])
     useEffect(() => {
@@ -41,12 +35,12 @@ export const Products = () => {
             {
                data.map((m, i) => {
                 return (
-                    <div key={i}>
+                    <div key={`row-${i}`}>
                         <Row className="justify-content-md-center">
                             {m.map((d,index) => {
                              return (
                                 <>
-                            <Col sm key={index}>
+                            <Col sm key={`col-${index}`}>
                             <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={d.thumbnail} height="100px" />
       <Card.Body>
